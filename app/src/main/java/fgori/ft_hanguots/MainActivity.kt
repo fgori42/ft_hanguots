@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val button4 = findViewById<Button>(R.id.button4)
 
         button.setOnClickListener {
-            if (button2.visibility == View.VISIBLE) {
+            if (button2.isVisible) {
                 button2.visibility = View.INVISIBLE
                 button3.visibility = View.INVISIBLE
                 button4.visibility = View.INVISIBLE

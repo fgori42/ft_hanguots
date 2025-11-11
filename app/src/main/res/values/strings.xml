@@ -4,9 +4,14 @@
     <string name="cancel">Annulla</string>
     <string name="save">Salva</string>
     <string name="name_hint">Nome</string>
+    <string name="password_hint">Password</string>
     <string name="surname_hint">Cognome</string>
     <string name="email_hint">Email</string>
     <string name="phone_hint">Telefono</string>
     <string name="address_hint">Indirizzo</string>
     <string name="contact_image_description">Immagine del contatto</string>
+    <string name="login_hint">Accedi</string>
+    <string name="sigin_hint">Iscriviti</string>
+    <string name="return_text">Torna in dietro</string>
+    <string name="setting">Impostazioni</string>
 </resources>
