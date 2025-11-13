@@ -1,12 +1,44 @@
 package fgori.ft_hanguots
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.view.View
+import android.widget.Toast
+import android.widget.ImageView
+import android.content.Intent
+import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 
 class CreateContactActivity : AppCompatActivity() {
+    private lateinit var image: ImageView
+    private var selectedImageUri: Uri? = null
+
+
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            image.setImageURI(it)
+
+            val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            contentResolver.takePersistableUriPermission(it, flag)
+        }
+    }
+
+    fun createContactList() : MutableList<EditText>
+    {
+        val list = mutableListOf<EditText>()
+        list.add(findViewById<EditText>(R.id.nameText))
+        list.add(findViewById<EditText>(R.id.surnameText))
+        list.add(findViewById<EditText>(R.id.emailText))
+        list.add(findViewById<EditText>(R.id.phoneText))
+        list.add(findViewById<EditText>(R.id.addressText))
+        return list
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -16,8 +48,44 @@ class CreateContactActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val newContact = Contact(id = System.currentTimeMillis())
+        image = findViewById(R.id.imageViewLog)
+
+        val saveBtm = findViewById<View>(R.id.saveBtm)
+        val returnBtm = findViewById<View>(R.id.returnBtm)
+        val dbHelper = DatabaseHelper(this)
+        val listOfText = createContactList()
+        returnBtm.setOnClickListener {
+            finish()
+        }
+
+        saveBtm.setOnClickListener {
+            if (listOfText[0].text.toString() == "")
+            {
+                Toast.makeText(this, "Name is required", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (listOfText[2].text.toString() == "" && listOfText[3].text.toString() == "")
+            {
+                Toast.makeText(this, "Email or phone is required", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val newContact = Contact(id = System.currentTimeMillis(),
+                listOfText[0].text.toString(),
+                listOfText[1].text.toString(),
+                listOfText[2].text.toString(),
+                listOfText[3].text.toString(),
+                listOfText[4].text.toString(),
+                selectedImageUri.toString())
+            dbHelper.addContact(newContact)
+            finish()
+        }
+
+        image.setOnClickListener {
+            pickImageLauncher.launch("image/*")
+
 
         }
+    }
 
 }

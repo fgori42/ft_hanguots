@@ -15,6 +15,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         const val TABLE_CONTACTS = "contacts"
         const val COLUMN_ID = "_id" // Nome standard per la chiave primaria
         const val COLUMN_NAME = "name"
+        const val COLUMN_SURNAME = "surname"
         const val COLUMN_PHONE = "phone"
         const val COLUMN_EMAIL = "email"
         const val COLUMN_ADDRESS = "address"
@@ -35,6 +36,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
                 "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "$COLUMN_NAME TEXT NOT NULL," +
                 "$COLUMN_PHONE TEXT NOT NULL," +
+                "$COLUMN_SURNAME TEXT," +
                 "$COLUMN_EMAIL TEXT," +
                 "$COLUMN_ADDRESS TEXT," +
                 "$COLUMN_IMAGE_URI TEXT)"
@@ -63,6 +65,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
 
         val values = ContentValues().apply {
             put(COLUMN_NAME, contact.getValue("name"))
+            put(COLUMN_SURNAME, contact.getValue("surname"))
             put(COLUMN_PHONE, contact.getValue("phone"))
             put(COLUMN_EMAIL, contact.getValue("email"))
             put(COLUMN_ADDRESS, contact.getValue("address"))
@@ -103,6 +106,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
                 val contact = Contact(
                     cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SURNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDRESS)),

@@ -21,11 +21,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var image: ImageView
     private var selectedImageUri: Uri? = null
 
-    // 1. Definiamo il "ricevitore" per il risultato. Questo codice viene eseguito
-    //    DOPO che l'utente ha scelto un'immagine.
+
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            // Se l'utente ha scelto un'immagine (l'uri non è null), la impostiamo.
             selectedImageUri = it
             image.setImageURI(it)
         }
@@ -66,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         registerButton.setOnClickListener {
             if(passwordText.isVisible)
             {
-                // Passa a modalità registrazione
+
                 passwordText.visibility = View.INVISIBLE
                 loginButton.visibility = View.INVISIBLE
                 for(text in sigIntexts)

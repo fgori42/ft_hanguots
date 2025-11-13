@@ -7,6 +7,8 @@ import java.lang.IllegalArgumentException
 
 class Contact(private val id : Long) {
     private var name: String = ""
+    private var surname: String = ""
+    private var fatherNane: String = ""
     private var email: String = "" 
     private var phone: String = ""
     private var address: String = ""
@@ -14,9 +16,10 @@ class Contact(private val id : Long) {
     var messages: MutableMap<Long, Message> = mutableMapOf()
 
     
-    constructor(id: Long, name: String, email: String, phone: String, address: String, img: String) : this(id)
+    constructor(id: Long, name: String, surname: String ,email: String, phone: String, address: String, img: String) : this(id)
     {
         this.name = name
+        this.surname = surname
         this.email = email
         this.phone = phone
         this.address = address
@@ -29,6 +32,7 @@ class Contact(private val id : Long) {
         {
             "id" -> id.toString()
             "name" -> name
+            "surname" -> surname
             "email" -> email
             "phone" -> phone
             "address" -> address
@@ -41,13 +45,14 @@ class Contact(private val id : Long) {
     {
         if (newValue.trim().isEmpty() || value.trim().isEmpty())
             throw IllegalArgumentException("Value cannot be empty")
-        if (value != "name" && value != "email" && value != "phone" && value != "address" && value != "img")
+        if (value != "name" && value != "surname" && value != "email" && value != "phone" && value != "address" && value != "img")
             throw IllegalArgumentException("Value cannot be empty")
         if (value == "email" && !newValue.contains("@"))
             throw IllegalArgumentException("Email is not valid")
         when(value)
         {
              "name" -> name = newValue
+             "surname" -> surname = newValue
              "email" -> email = newValue
              "phone" -> phone = newValue
              "address" -> address = newValue

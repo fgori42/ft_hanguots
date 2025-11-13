@@ -3,6 +3,7 @@ package fgori.ft_hanguots
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.content.Intent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,6 +21,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val ManContacts = findViewById<View>(R.id.contactList)
+
+
         val button = findViewById<Button>(R.id.button)
         val button2 = findViewById<Button>(R.id.button2)
         val button3 = findViewById<Button>(R.id.button3)
@@ -36,5 +40,11 @@ class MainActivity : AppCompatActivity() {
                 button4.visibility = View.VISIBLE
             }
         }
+
+        button2.setOnClickListener {
+            startActivity(Intent(this, CreateContactActivity::class.java))
+
+        }
+
     }
 }
